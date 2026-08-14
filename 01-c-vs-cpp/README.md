@@ -14,6 +14,29 @@ and the comments inside each file say which standard is needed.
   and pointer values convert to it implicitly, and `++` on a `bool` was removed
   in C++17 while `--` was never allowed at all.
 
+## const in a constant expression
+
+- `const-constant-expression.c` — A `const` object in C is a read-only object,
+  not a compile time constant, so `x` is never a constant expression and
+  `int a[x]` is rejected under `-std=c89 -pedantic-errors`. From C99 on the
+  same line compiles, but only because it becomes a variable length array, not
+  because `x` became constant; at file scope, where a VLA cannot rescue it, it
+  stays an error in every C standard.
+- `const-constant-expression.cpp` — A `const` integral object initialized with
+  a constant expression *is* itself a constant expression in C++, so `int a[x]`
+  is an ordinary fixed size array with no VLA involved, already under
+  `-std=c++98`.
+
+## const without an initializer
+
+- `const-uninitialized.c` — C lets a `const` object be declared with no
+  initializer. At file scope it is a tentative definition and ends up zero, at
+  block scope its value is indeterminate and can never legally be set, so it is
+  legal without being useful.
+- `const-uninitialized.cpp` — C++ requires a `const` object to be initialized
+  at its declaration, at either scope, so the same declaration is a compile
+  error.
+
 ## for loop variable shadowing
 
 - `for-loop-variable-shadow.c` — A variable declared in the loop body sits in
