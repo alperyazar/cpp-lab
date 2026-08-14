@@ -1,0 +1,49 @@
+{
+    "name": "cpp-lab Environment",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+
+    "mounts": [
+    // {
+    //   //OpenCode
+    //   "source": "${localEnv:HOME}/.local/share/opencode",
+    //   "target": "/home/vscode/.local/share/opencode",
+    //   "type": "bind"
+    // },
+    // {
+    //   //OpenCode
+    //   "source": "${localEnv:HOME}/.config/opencode",
+    //   "target": "/home/vscode/.config/opencode",
+    //   "type": "bind"
+    // },
+    {
+      //Claude Code
+      "source": "${localEnv:HOME}/.claude",
+      "target": "/home/vscode/.claude",
+      "type": "bind"
+    },
+    {
+      //Claude Code
+      "source": "${localEnv:HOME}/.claude.json",
+      "target": "/home/vscode/.claude.json",
+      "type": "bind"
+    }
+  ],
+
+   //"onCreateCommand":"sudo chown -R vscode:vscode /home/vscode/.local; sudo chown -R vscode:vscode /home/vscode/.config",
+
+    //"runArgs": [
+    //    "--userns=keep-id:uid=1000,gid=1000"
+    //]
+
+    "customizations": {
+    "vscode": {
+      "extensions": [
+        "editorconfig.editorconfig",
+        "avidanson.vscode-markdownlint",
+       // "ms-vscode.cpptools"
+      ]
+    }
+    }
+}
