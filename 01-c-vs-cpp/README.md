@@ -117,6 +117,18 @@ why this snippet is read with `nm` rather than by watching it fail to compile.
 - `implicit-int.cpp` — The implicit int rule is prohibited in C++, so a
   definition with no return type does not compile.
 
+## pointer conversions
+
+- `pointer-conversion.c` — Two separate constraint violations: `int *p = x;`
+  builds a pointer out of an integer, and `char *q = &dval;` assigns between
+  incompatible pointer types. ISO C requires a diagnostic for both, but
+  compilers traditionally warned and carried on, which is the behaviour the
+  snippet is about. Note that GCC 14 promoted both to errors by default, so the
+  two `-Wno-error=` flags in the file header are now needed to see it.
+- `pointer-conversion.cpp` — C++ has no implicit conversion for either case, so
+  both are errors with no flags at all and nothing softens them. The cast has
+  to be written down.
+
 ## scope leakage
 
 - `scope-leakage.c` — A variable only the loop needs still outlives it, so `i`
