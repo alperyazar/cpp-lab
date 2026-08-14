@@ -42,6 +42,7 @@
       "extensions": [
         "editorconfig.editorconfig",
         "avidanson.vscode-markdownlint",
+        "ms-vscode.cpptools-extension-pack"
        // "ms-vscode.cpptools"
       ]
     }
