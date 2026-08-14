@@ -117,6 +117,19 @@ why this snippet is read with `nm` rather than by watching it fail to compile.
 - `implicit-int.cpp` — The implicit int rule is prohibited in C++, so a
   definition with no return type does not compile.
 
+## scope leakage
+
+- `scope-leakage.c` — A variable only the loop needs still outlives it, so `i`
+  is a live name for the rest of `main` and can be read or reused by accident.
+  C99 fixed the loop half of this with `for (int i = 0; ...)`, but C has never
+  had a way to declare a variable in an `if`, `while` or `switch` condition, so
+  that half of the leak has no C answer in any standard.
+- `scope-leakage.cpp` — C++ scopes the name to the construct that needs it.
+  Declaring in the condition, `if (int x = foo())`, has been legal since C++98
+  and is the part C has no equivalent for. C++17 added the init-statement form,
+  `if (int y = foo(); y > 10)`, for the common case where the value you want to
+  declare is not the value you want to test.
+
 ## user defined types
 
 - `user-defined-types.c` — Struct, enum and union tags live in a namespace of
