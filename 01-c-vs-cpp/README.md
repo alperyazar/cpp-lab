@@ -30,6 +30,17 @@ why this snippet is read with `nm` rather than by watching it fail to compile.
   each translation unit gets its own copy. Add `extern` in C++ to get the C
   behaviour back.
 
+## const dropped through a pointer
+
+- `const-pointer-drop.c` — Initializing an `int *` from a `const int *` is a
+  constraint violation in C as well, but every compiler has traditionally
+  accepted it with a warning, so it still builds under `-Wall` and only becomes
+  an error once `-pedantic-errors` is added. Writing the cast out is the honest
+  way to say it.
+- `const-pointer-drop.cpp` — C++ has no implicit conversion that drops a
+  qualifier, so the same line is an error with no flags at all, back to
+  `-std=c++98`. A `const_cast` is what it takes to get through.
+
 ## const in a constant expression
 
 - `const-constant-expression.c` — A `const` object in C is a read-only object,
