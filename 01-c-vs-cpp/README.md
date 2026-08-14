@@ -64,6 +64,22 @@ why this snippet is read with `nm` rather than by watching it fail to compile.
   at its declaration, at either scope, so the same declaration is a compile
   error.
 
+## enum
+
+There is no `.c` file here yet. C does have enums, so this one is not a
+missing counterpart in the usual sense, the C side is described in the
+comments instead.
+
+- `enum.cpp` — Four differences in one file. The tag prefix is optional, so
+  `Color` names the type where C needs `enum Color`. The underlying type is
+  whatever fits, so an enumerator too big for `int` simply widens it, whereas C
+  before C23 rejects such an enumerator outright rather than picking a wider
+  type. C++11 lets you fix the underlying type with `enum Y : unsigned char`,
+  which C only gained in C23. And C++ refuses to convert an arithmetic type or
+  another enum type *into* an enum, which C allows silently, while conversion
+  the other way stays legal in both, except for `enum class`, whose whole point
+  is that it converts in neither direction. Prints 4, 4, 8, 1.
+
 ## for loop variable shadowing
 
 - `for-loop-variable-shadow.c` — A variable declared in the loop body sits in
