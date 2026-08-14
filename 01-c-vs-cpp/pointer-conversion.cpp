@@ -6,6 +6,8 @@ only way through, which is the point, it has to be written down.
 Use: -std=c++98 -pedantic-errors
 */
 
+#include <stdlib.h>
+
 int main()
 {
   int x = 35;
@@ -13,6 +15,9 @@ int main()
 
   double dval = 45.45;
   char *q = &dval; // Not allowed
+
+  int *n = malloc(sizeof(int)); //Not allowed, explicit conversion needed.
+                                //Not freed up.
 
   return 0;
 }

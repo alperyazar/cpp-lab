@@ -119,15 +119,20 @@ why this snippet is read with `nm` rather than by watching it fail to compile.
 
 ## pointer conversions
 
-- `pointer-conversion.c` — Two separate constraint violations: `int *p = x;`
-  builds a pointer out of an integer, and `char *q = &dval;` assigns between
-  incompatible pointer types. ISO C requires a diagnostic for both, but
-  compilers traditionally warned and carried on, which is the behaviour the
-  snippet is about. Note that GCC 14 promoted both to errors by default, so the
-  two `-Wno-error=` flags in the file header are now needed to see it.
-- `pointer-conversion.cpp` — C++ has no implicit conversion for either case, so
-  both are errors with no flags at all and nothing softens them. The cast has
-  to be written down.
+- `pointer-conversion.c` — Two constraint violations and one perfectly legal
+  conversion, which is the part worth separating. `int *p = x;` builds a
+  pointer out of an integer and `char *q = &dval;` assigns between incompatible
+  pointer types: ISO C requires a diagnostic for both, but compilers
+  traditionally warned and carried on, which is the behaviour the snippet is
+  about. GCC 14 promoted both to errors by default, so the two `-Wno-error=`
+  flags in the file header are now needed to see it. The third case,
+  `int *n = malloc(sizeof(int));`, is different in kind: `void *` converts to
+  any object pointer type implicitly in C, so it draws no diagnostic at all.
+- `pointer-conversion.cpp` — C++ has no implicit conversion for any of the
+  three, so all are errors with no flags at all and nothing softens them. The
+  `malloc` line is the one that bites in practice, because `void *` to `T *`
+  needs a cast in C++ and this is why C code that also has to compile as C++
+  casts the result of `malloc`.
 
 ## scope leakage
 
