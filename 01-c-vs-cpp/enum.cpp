@@ -14,6 +14,12 @@ enum Color {White, Gray, Brown, Black}; //In C it is always enum Color but in
 //just widens the type. C is stricter than that: before C23 an enumerator that
 //does not fit in int is a constraint violation, C does NOT pick a wider type
 //for you. C23 is what lifted the restriction.
+//Careful though, that restriction is about the enumerator VALUES, not about
+//the size of the enum type. C leaves the enumerated type implementation
+//defined (compatible with char, a signed or an unsigned integer type), so
+//assert(sizeof(int) == sizeof(enum Color)); CAN fail. gcc -fshort-enums makes
+//it fail, sizeof(enum Color) becomes 1. What C guarantees before C23 is that
+//the enumerators themselves have type int.
 
 enum X {A, B = 12345678912345L, C}; //Cpp: fine. C: error before C23
 
