@@ -23,5 +23,5 @@ RUN curl -fsSL https://claude.ai/install.sh | bash
 # /workspaces/cpp-lab keeps sessions filed under one project so -c and -r find
 # them.
 RUN echo "alias claudedanger='(cd /workspaces/cpp-lab && claude --dangerously-skip-permissions)'" \
-    >> /home/vscode/.bashrc
+    | tee -a /home/vscode/.bashrc /home/vscode/.zshrc > /dev/null
 USER root
