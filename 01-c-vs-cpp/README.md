@@ -75,3 +75,14 @@ and the comments inside each file say which standard is needed.
 - `user-defined-types.cpp` — A C++ struct is a class, the tag prefix is
   optional unless an ordinary identifier hides the class name, and an empty
   struct has size 1 rather than 0.
+
+## using keyword
+
+There is no `.c` file here, C has no counterpart to this feature in any
+standard, C23 included.
+
+- `using-keyword.cpp` — The alias declaration `using X = T;` is the C++11
+  alternative to `typedef T X;`. It reads left to right, which is what makes it
+  easier than `typedef` for function pointer types, it declares the very same
+  kind of name (so aliasing a type twice is a redeclaration, not an error), and
+  unlike `typedef` it can be templated. Needs `-std=c++11`.
