@@ -6,4 +6,7 @@ Use: -std=c++98 -pedantic-errors
 
 const int x; //Not OK in C++
 
-int main(){}
+int main(){
+  int *const p; //Error, uninitialized const object;
+  const int* q; //OK, q is not const
+}
