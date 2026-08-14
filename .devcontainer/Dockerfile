@@ -16,4 +16,12 @@ RUN npm install -g markdownlint-cli2
 # Claude Code:
 USER vscode
 RUN curl -fsSL https://claude.ai/install.sh | bash
+
+# claudedanger: start Claude Code from the project directory with permission
+# checks off. Only reasonable because this container is isolated. The subshell
+# keeps the cd from leaking into the calling shell, and running from
+# /workspaces/cpp-lab keeps sessions filed under one project so -c and -r find
+# them.
+RUN echo "alias claudedanger='(cd /workspaces/cpp-lab && claude --dangerously-skip-permissions)'" \
+    >> /home/vscode/.bashrc
 USER root
