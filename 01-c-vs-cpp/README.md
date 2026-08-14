@@ -14,6 +14,22 @@ and the comments inside each file say which standard is needed.
   and pointer values convert to it implicitly, and `++` on a `bool` was removed
   in C++17 while `--` was never allowed at all.
 
+## const and linkage
+
+There is no `.cpp` file here. The same source is valid C and valid C++, so one
+file serves both and the difference shows up only in the object file, which is
+why this snippet is read with `nm` rather than by watching it fail to compile.
+
+- `const-linkage.c` — `int x;` has external linkage and `static int y;` has
+  internal linkage in both languages, but `const int a = 10;` at file scope
+  differs: `const` says nothing about linkage in C, so `a` is external
+  (`nm` shows `R a`), while in C++ a namespace scope `const` object has
+  internal linkage by default (`nm` shows `r _ZL1a`, the `_ZL` mangling marking
+  it internal). The practical consequence is that defining `const int a = 10;`
+  in a header is a multiple definition link error in C, and fine in C++ because
+  each translation unit gets its own copy. Add `extern` in C++ to get the C
+  behaviour back.
+
 ## const in a constant expression
 
 - `const-constant-expression.c` — A `const` object in C is a read-only object,
