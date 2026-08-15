@@ -37,3 +37,19 @@ thing, so a counterpart would be a copy.
   context, so `sizeof x++` yields `sizeof(int)` and never increments `x`. No
   machine code is emitted for `x++` at all, only its type is used. Prints
   `4 10`, not `4 11`.
+
+## array decay recap
+
+Also not a difference, also a recap, and again no `.c` file because the same
+source compiles as C99 and prints the same thing.
+
+- `array-decay-recap.cpp` — **Array decay**, which the standard calls *array to
+  pointer conversion*. Expressions have types, and the decay produces a
+  *different* expression rather than changing the type of the old one. The
+  expression `a` is an lvalue of type `int[10]`; the decayed expression is a
+  value of type `int*` equal to `&a[0]`. The two contexts where there is no
+  decay are `sizeof` and unary `&`, so the operand
+  keeps type `int[10]` and `&a` has type `int(*)[10]`. That is why `a + 1`
+  steps 4 bytes and `&a + 1` steps 40, from the same address — the type of the
+  expression decides what `+ 1` means. A string literal initialising an array
+  is the third exception, see `string-literal.cpp` above.
