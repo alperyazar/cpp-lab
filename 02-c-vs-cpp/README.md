@@ -26,3 +26,14 @@ described in the comments instead.
   warning. The `int *ptr3 = &"alper";` line is a trick for reading the type off
   the compiler: C++ reports `const char (*)[6]` and C reports `char (*)[6]`,
   and that pair of messages is the entire difference.
+
+## unevaluated context recap
+
+Not a C vs C++ difference, just a recap. There is no `.c` file because there
+is nothing to contrast: the same source compiles as C99 and prints the same
+thing, so a counterpart would be a copy.
+
+- `unevaluated-context-recap.cpp` — The operand of `sizeof` is an unevaluated
+  context, so `sizeof x++` yields `sizeof(int)` and never increments `x`. No
+  machine code is emitted for `x++` at all, only its type is used. Prints
+  `4 10`, not `4 11`.
